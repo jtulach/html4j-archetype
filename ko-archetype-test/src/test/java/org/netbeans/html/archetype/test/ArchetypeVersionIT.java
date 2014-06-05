@@ -42,7 +42,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author Jaroslav Tulach <jtulach@netbeans.org>
+ * @author Jaroslav Tulach
  */
 public class ArchetypeVersionIT {
     private String version;
