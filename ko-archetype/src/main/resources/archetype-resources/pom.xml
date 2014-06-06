@@ -40,6 +40,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <net.java.html.version>${net.java.html.version}</net.java.html.version>
     <netbeans.compile.on.save>none</netbeans.compile.on.save>
+    <project.mainclass>\${package}.Main</project.mainclass>
   </properties>
   <build>
       <plugins>
@@ -72,7 +73,7 @@
               <configuration>
                   <archive>
                       <manifest>
-                          <mainClass>\${package}.Main</mainClass>
+                          <mainClass>\${project.mainclass}</mainClass>
                           <addClasspath>true</addClasspath>
                           <classpathPrefix>lib/</classpathPrefix>
                       </manifest>
@@ -90,7 +91,7 @@
                           <value>\${basedir}/src/main/webapp/</value>
                       </systemProperty>
                   </systemProperties>
-                  <mainClass>\${package}.Main</mainClass>
+                  <mainClass>\${project.mainclass}</mainClass>
               </configuration>
           </plugin>      
           <plugin>
