@@ -81,6 +81,10 @@ public class VerifyArchetypeIT {
             // OK, the run should fail on other systems than mac
         }
         v2.verifyTextInLog("Building RoboVM app for: ios (x86)");
+        
+        File nbactions = new File(created, "nbactions.xml");
+        assertTrue(nbactions.isFile(), "Actions file is in there");
+        assertTrue(Files.readFile(nbactions).contains("robovm"), "There should robovm goals in " + nbactions);
     }
     
     @Test public void skipiBrwsrProjectCompiles() throws Exception {
@@ -99,6 +103,9 @@ public class VerifyArchetypeIT {
         v.verifyErrorFreeLog();
         v.verifyTextInLog("noicompile/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
         
+        File nbactions = new File(created, "nbactions.xml");
+        assertTrue(nbactions.isFile(), "Actions file is in there");
+        assertFalse(Files.readFile(nbactions).contains("robovm"), "There should be no mention of robovm in " + nbactions);
     }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {

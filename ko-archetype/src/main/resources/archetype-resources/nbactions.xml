@@ -17,4 +17,30 @@
             <jpda.listen>maven</jpda.listen>
         </properties>
     </action>
+#if ($ibrwsr == "true")    
+    <action>
+        <actionName>CUSTOM-ipad-sim</actionName>
+        <displayName>Run in iPad Simulator</displayName>
+        <goals>
+            <goal>package</goal>
+            <goal>robovm:ipad-sim</goal>
+        </goals>
+        <properties>
+            <skipTests>true</skipTests>
+        </properties>
+        <activatedProfiles>
+            <activatedProfile>ibrwsr</activatedProfile>
+        </activatedProfiles>
+    </action>
+    <action>
+        <actionName>CUSTOM-create-ipa</actionName>
+        <displayName>Create iOS Package Archive</displayName>
+        <goals>
+            <goal>robovm:create-ipa</goal>
+        </goals>
+        <activatedProfiles>
+            <activatedProfile>ibrwsr</activatedProfile>
+        </activatedProfiles>
+    </action>
+#end    
 </actions>

@@ -57,7 +57,7 @@
         <include>**/*.xml</include>
       </includes>
     </fileSet>
-    <fileSet filtered="false" packaged="false">
+    <fileSet filtered="true" packaged="false">
       <directory></directory>
       <includes>
         <include>nbactions*.xml</include>
