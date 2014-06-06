@@ -17,6 +17,20 @@
             <jpda.listen>maven</jpda.listen>
         </properties>
     </action>
+#if ($dlvkbrwsr == "true")
+    <action>
+        <actionName>CUSTOM-android-run</actionName>
+        <displayName>Run in Android</displayName>
+        <goals>
+            <goal>package</goal>
+            <goal>android:deploy</goal>
+            <goal>android:run</goal>
+        </goals>
+        <properties>
+            <skipTests>true</skipTests>
+        </properties>
+    </action>
+#end
 #if ($ibrwsr == "true")    
     <action>
         <actionName>CUSTOM-ipad-sim</actionName>
