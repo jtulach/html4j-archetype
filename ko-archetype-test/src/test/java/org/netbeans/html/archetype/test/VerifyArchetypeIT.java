@@ -29,6 +29,7 @@ import org.apache.maven.it.VerificationException;
 import org.apache.maven.it.Verifier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
+import org.testng.reporters.Files;
 
 /**
  *
@@ -80,6 +81,24 @@ public class VerifyArchetypeIT {
             // OK, the run should fail on other systems than mac
         }
         v2.verifyTextInLog("Building RoboVM app for: ios (x86)");
+    }
+    
+    @Test public void skipiBrwsrProjectCompiles() throws Exception {
+        final File dir = new File("target/tests/noicompile/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Dibrwsr=false");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        File pom = new File(created, "pom.xml");
+        assertTrue(pom.isFile(), "Pom file is in there");
+        assertFalse(Files.readFile(pom).contains("ibrwsr"), "There should be no mention of ibrwsr in " + pom);
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.executeGoal("package");
+        
+        v.verifyErrorFreeLog();
+        v.verifyTextInLog("noicompile/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        
     }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {

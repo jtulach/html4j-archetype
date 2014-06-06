@@ -165,7 +165,7 @@
                 </dependency>
            </dependencies>
        </profile>      
-#if ($ibrwsr)
+#if ($ibrwsr == "true")
       <profile>
           <id>ibrwsr</id>
           <dependencies>
