@@ -6,5 +6,8 @@
             <goal>package</goal>
             <goal>robovm:ipad-sim</goal>
         </goals>
+        <properties>
+            <skipTests>true</skipTests>
+        </properties>
     </action>
 </actions>
