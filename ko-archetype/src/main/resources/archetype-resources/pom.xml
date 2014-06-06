@@ -227,6 +227,11 @@
               </dependency>
               <dependency>
                   <groupId>org.netbeans.html</groupId>
+                  <artifactId>ko4j</artifactId>
+                  <version>\${net.java.html.version}</version>
+              </dependency>
+              <dependency>
+                  <groupId>org.netbeans.html</groupId>
                   <artifactId>ko-ws-tyrus</artifactId>
                   <version>\${net.java.html.version}</version>
                   <exclusions>
