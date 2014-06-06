@@ -26,6 +26,9 @@
             <goal>android:deploy</goal>
             <goal>android:run</goal>
         </goals>
+        <activatedProfiles>
+            <activatedProfile>dlvkbrwsr</activatedProfile>
+        </activatedProfiles>
         <properties>
             <skipTests>true</skipTests>
         </properties>
