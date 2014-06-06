@@ -15,6 +15,7 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <net.java.html.version>0.8.1</net.java.html.version>
       <nb.html.version>0.8</nb.html.version>
+      <brwsr.html.version>0.6</brwsr.html.version>
       <bck2brwsr.version>0.9-SNAPSHOT</bck2brwsr.version>
       <teavm.version>0.1</teavm.version>
       <license>COPYING</license>
@@ -74,6 +75,7 @@
                   <header>COPYING</header>
                   <strictCheck>true</strictCheck>
                   <excludes>
+                       <exclude>ko-archetype/src/main/resources/archetype-resources/**</exclude>
                        <exclude>*</exclude>
                        <exclude>.*/**</exclude>
                   </excludes>
