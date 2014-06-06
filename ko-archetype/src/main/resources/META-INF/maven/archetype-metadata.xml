@@ -29,6 +29,9 @@
     <requiredProperty key="ibrwsr">
         <defaultValue>true</defaultValue>
     </requiredProperty>  
+    <requiredProperty key="dlvkbrwsr">
+        <defaultValue>false</defaultValue>
+    </requiredProperty>  
   </requiredProperties>
   <fileSets>
     <fileSet filtered="true" packaged="true">
@@ -61,6 +64,7 @@
       <directory></directory>
       <includes>
         <include>nbactions*.xml</include>
+        <include>AndroidManifest*.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="false">

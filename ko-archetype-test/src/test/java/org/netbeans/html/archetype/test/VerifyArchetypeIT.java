@@ -107,6 +107,49 @@ public class VerifyArchetypeIT {
         assertTrue(nbactions.isFile(), "Actions file is in there");
         assertFalse(Files.readFile(nbactions).contains("robovm"), "There should be no mention of robovm in " + nbactions);
     }
+
+    @Test public void dlvkbrwsrProjectCompiles() throws Exception {
+        final File dir = new File("target/tests/dlvkbrwsrcmp/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Ddlvkbrwsr=true");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.addCliOption("-Pdlvkbrwsr");
+        v.executeGoal("verify");
+        
+        v.verifyErrorFreeLog();
+        v.verifyTextInLog("dlvkbrwsrcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        
+        Verifier v2 = new Verifier(created.getAbsolutePath());
+        v2.addCliOption("-Pdlvkbrwsr");
+        v2.executeGoal("package");
+        v2.verifyTextInLog("android-maven-plugin");
+        
+//        File nbactions = new File(created, "nbactions.xml");
+//        assertTrue(nbactions.isFile(), "Actions file is in there");
+//        assertTrue(Files.readFile(nbactions).contains("robovm"), "There should robovm goals in " + nbactions);
+    }
+
+    @Test public void withoutDlvkbrwsrProjectCompiles() throws Exception {
+        final File dir = new File("target/tests/wdlvkbrwsrcmp/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Ddlvkbrwsr=false");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        final File pom = new File(created, "pom.xml");
+        assertTrue(pom.isFile(), "Pom file is in there");
+        assertFalse(Files.readFile(pom).contains("dlvkbrwsr"), "There should be no mention of dlvkbrwsr in " + pom);
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.addCliOption("-Pdlvkbrwsr");
+        v.executeGoal("verify");
+        
+        v.verifyErrorFreeLog();
+        v.verifyTextInLog("wdlvkbrwsrcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+    }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {
         Verifier v = new Verifier(dir.getAbsolutePath());
