@@ -173,5 +173,44 @@
               </plugins>
           </build>
       </profile>
+#if ($ibrwsr)
+      <profile>
+          <id>ibrwsr</id>
+          <dependencies>
+              <dependency>
+                  <groupId>org.apidesign.brwsr</groupId>
+                  <artifactId>ibrwsr</artifactId>
+                  <version>${brwsr.html.version}</version>
+                  <scope>runtime</scope>
+              </dependency>
+          </dependencies>
+          <build>
+              <plugins>
+                  <plugin>
+                      <groupId>org.robovm</groupId>
+                      <artifactId>robovm-maven-plugin</artifactId>
+                      <version>0.0.11.1</version>
+                      <configuration>
+                          <config>
+                              <mainClass>\${project.mainclass}</mainClass>
+                              <forceLinkClasses>
+                                  <pattern>java.util.logging.ConsoleHandler</pattern>
+                                  <pattern>java.util.logging.SimpleFormatter</pattern>
+                                  <pattern>org.netbeans.html.ko4j.KO4J</pattern>
+                                  <pattern>org.netbeans.html.sound.impl.BrowserAudioEnv</pattern>
+                                  <pattern>org.apidesign.brwsr.IBrwsrPrsntr</pattern>
+                              </forceLinkClasses>
+                              <executableName>\${artifactId}</executableName>
+                              <resources>
+                                  <resource>src/main/webapp/pages/</resource>
+                              </resources>
+                          </config>
+                          <includeJFX>false</includeJFX>
+                      </configuration>
+                  </plugin>
+              </plugins>
+          </build>
+      </profile>      
+#end
   </profiles>  
 </project>

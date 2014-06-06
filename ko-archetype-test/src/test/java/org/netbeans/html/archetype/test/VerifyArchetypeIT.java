@@ -25,6 +25,7 @@ package org.netbeans.html.archetype.test;
 
 import java.io.File;
 import java.util.Properties;
+import org.apache.maven.it.VerificationException;
 import org.apache.maven.it.Verifier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
@@ -34,7 +35,7 @@ import static org.testng.Assert.*;
  * @author Jaroslav Tulach
  */
 public class VerifyArchetypeIT {
-    @Test public void projectCompiles() throws Exception {
+    @Test public void defaultProjectCompiles() throws Exception {
         final File dir = new File("target/tests/fxcompile/").getAbsoluteFile();
         generateFromArchetype(dir);
         
@@ -54,6 +55,31 @@ public class VerifyArchetypeIT {
         }
         
         v.verifyTextInLog("fxcompile/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+    }
+    
+    @Test public void iBrwsrProjectCompiles() throws Exception {
+        final File dir = new File("target/tests/icompile/").getAbsoluteFile();
+        generateFromArchetype(dir);
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.addCliOption("-Pibrwsr");
+        v.executeGoal("verify");
+        
+        v.verifyErrorFreeLog();
+        v.verifyTextInLog("icompile/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        
+        Verifier v2 = new Verifier(created.getAbsolutePath());
+        v2.addCliOption("-Pibrwsr");
+        try { 
+            v2.executeGoal("robovm:ipad-sim");
+        } catch (VerificationException ex) {
+            // OK, the run should fail on other systems than mac
+        }
+        v2.verifyTextInLog("Building RoboVM app for: ios (x86)");
     }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {
