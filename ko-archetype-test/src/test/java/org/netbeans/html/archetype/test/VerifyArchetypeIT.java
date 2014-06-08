@@ -85,6 +85,13 @@ public class VerifyArchetypeIT {
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
         assertTrue(Files.readFile(nbactions).contains("robovm"), "There should robovm goals in " + nbactions);
+
+        v2.assertFilePresent("target/images/Icon.png");
+        v2.assertFilePresent("target/images/Icon@2.png");
+        v2.assertFilePresent("target/images/Icon-60.png");
+        v2.assertFilePresent("target/images/Icon-60@2.png");
+        v2.assertFilePresent("target/images/Icon-72.png");
+        v2.assertFilePresent("target/images/Icon-76.png");
     }
     
     @Test public void skipiBrwsrProjectCompiles() throws Exception {
@@ -122,6 +129,11 @@ public class VerifyArchetypeIT {
         
         v.verifyErrorFreeLog();
         v.verifyTextInLog("dlvkbrwsrcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        
+        v.assertFilePresent("target/res/drawable-hdpi/ic_launcher.png");
+        v.assertFilePresent("target/res/drawable-mdpi/ic_launcher.png");
+        v.assertFilePresent("target/res/drawable-xhdpi/ic_launcher.png");
+        v.assertFilePresent("target/res/drawable-xxhdpi/ic_launcher.png");
         
         Verifier v2 = new Verifier(created.getAbsolutePath());
         v2.addCliOption("-Pdlvkbrwsr");
