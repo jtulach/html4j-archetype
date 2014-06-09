@@ -24,12 +24,23 @@
 package org.netbeans.html.archetype.test;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPathFactoryConfigurationException;
 import org.apache.maven.it.VerificationException;
 import org.apache.maven.it.Verifier;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 import org.testng.reporters.Files;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -214,7 +225,7 @@ public class VerifyArchetypeIT {
         sysProp.put("package", "org.someuser.test.oat");
         sysProp.put("archetypeGroupId", "org.apidesign.html");
         sysProp.put("archetypeArtifactId", "knockout4j-archetype");
-        sysProp.put("archetypeVersion", ArchetypeVersionIT.findCurrentVersion());
+        sysProp.put("archetypeVersion", findCurrentVersion());
         
         for (String p : params) {
             v.addCliOption(p);
@@ -223,4 +234,18 @@ public class VerifyArchetypeIT {
         v.verifyErrorFreeLog();
         return v;
     }
+    
+    static String findCurrentVersion() throws XPathExpressionException, IOException, ParserConfigurationException, SAXException, XPathFactoryConfigurationException {
+        final ClassLoader l = VerifyArchetypeIT.class.getClassLoader();
+        URL u = l.getResource("META-INF/maven/org.apidesign.html/knockout4j-archetype/pom.xml");
+        assertNotNull(u, "Own pom found: " + System.getProperty("java.class.path"));
+
+        final XPathFactory fact = XPathFactory.newInstance();
+        fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+        XPathExpression xp = fact.newXPath().compile("project/version/text()");
+        
+        Document dom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(u.openStream());
+        return xp.evaluate(dom);
+    }    
 }
