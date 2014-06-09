@@ -13,10 +13,10 @@
   </parent>  
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <net.java.html.version>0.8.1</net.java.html.version>
+      <net.java.html.version>0.8.2</net.java.html.version>
       <nb.html.version>0.8</nb.html.version>
-      <brwsr.html.version>0.6</brwsr.html.version>
-      <bck2brwsr.version>0.9-SNAPSHOT</bck2brwsr.version>
+      <brwsr.html.version>0.7</brwsr.html.version>
+      <bck2brwsr.version>0.9</bck2brwsr.version>
       <license>COPYING</license>
   </properties>
   <modules>
