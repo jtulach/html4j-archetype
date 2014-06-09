@@ -23,23 +23,29 @@
  */
 package org.netbeans.html.archetype.test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPathFactoryConfigurationException;
 import org.apache.maven.it.VerificationException;
 import org.apache.maven.it.Verifier;
-import org.testng.annotations.Test;
 import static org.testng.Assert.*;
+import org.testng.annotations.Test;
 import org.testng.reporters.Files;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -103,6 +109,64 @@ public class VerifyArchetypeIT {
         v2.assertFilePresent("target/images/Icon-60@2.png");
         v2.assertFilePresent("target/images/Icon-72.png");
         v2.assertFilePresent("target/images/Icon-76.png");
+    }
+
+    @Test public void iBrwsrVerifyRoboVMPlugin() throws Exception {
+        final File dir = new File("target/tests/icompilecheck/").getAbsoluteFile();
+        generateFromArchetype(dir);
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        final File pom = new File(created, "pom.xml");
+        assertTrue(pom.isFile(), "Pom file is in there");
+        
+        final File eff = new File(created, "eff.xml");
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.addCliOption("-Doutput=" + eff);
+        v.executeGoal("help:effective-pom");
+        
+        assertTrue(eff.isFile(), "effective pom created: " + eff);
+        
+        Document dom = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(eff);
+        
+        final XPathFactory fact = XPathFactory.newInstance();
+        fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+        XPathExpression xp = fact.newXPath().compile("//groupId[text() = 'org.robovm']/../version/text()");
+        String prev = xp.evaluate(dom);
+        assertNotNull(prev, "Plugin version must be found");
+        
+        File out = new File(created, "out.txt");
+        
+        Verifier d = new Verifier(created.getAbsolutePath());
+        d.addCliOption("-Pibrwsr");
+        d.addCliOption("-DoutputFile=" + out);
+        d.executeGoal("dependency:tree");
+        
+        Pattern p = Pattern.compile(".*org\\.robovm:robo.*:([0-9\\.]*):.*");
+        BufferedReader r = new BufferedReader(new FileReader(out));
+        int cnt = 0;
+        for (;;) {
+            String l = r.readLine();
+            if (l == null) {
+                break;
+            }
+            Matcher m = p.matcher(l);
+            if (!m.matches()) {
+                continue;
+            }
+            int commonLen = Math.min(m.group(1).length(), prev.length());
+            String plug = prev.substring(0, commonLen);
+            String dep = m.group(1).substring(0, commonLen);
+            
+            assertEquals(dep, plug, "Versions must be the same");
+            cnt++;
+        }
+        r.close();
+        if (cnt == 0) {
+            fail("There should be a RoboVM dependency in " + out);
+        }
     }
     
     @Test public void skipiBrwsrProjectCompiles() throws Exception {
