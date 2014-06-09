@@ -195,6 +195,7 @@ public class VerifyArchetypeIT {
         v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/public_html/index.html");
         v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/public_html/bck2brwsr.js");
         v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
+        v.assertFilePresent("target/o-a-test.js");
 
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
