@@ -162,6 +162,44 @@ public class VerifyArchetypeIT {
         v.verifyErrorFreeLog();
         v.verifyTextInLog("wdlvkbrwsrcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
     }
+
+    @Test
+    public void bck2brwsrProjectCompiles() throws Exception {
+        final File dir = new File("target/tests/b2bcmp/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Dbck2brwsr=true");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
+        
+        File main = new File(new File(created, "src"), "main");
+        File pages = new File(new File(main, "webapp"), "pages");
+        File index = new File(pages, "index.html");
+        
+        String indexContent = Files.readFile(index);
+        assertTrue(indexContent.contains("src=\"bck2brwsr.js\""), "There should be bck2brwsr.js reference in " + index);
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.addCliOption("-Pbck2brwsr");
+        v.executeGoal("package");
+        
+        v.verifyErrorFreeLog();
+        v.verifyTextInLog("b2bcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
+        
+        v.assertFileNotPresent("target/res/drawable-hdpi/ic_launcher.png");
+        v.assertFileNotPresent("target/res/drawable-mdpi/ic_launcher.png");
+        v.assertFileNotPresent("target/res/drawable-xhdpi/ic_launcher.png");
+        v.assertFileNotPresent("target/res/drawable-xxhdpi/ic_launcher.png");
+
+        v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/");
+        v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/public_html/index.html");
+        v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/public_html/bck2brwsr.js");
+        v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
+
+        File nbactions = new File(created, "nbactions.xml");
+        assertTrue(nbactions.isFile(), "Actions file is in there");
+        assertTrue(Files.readFile(nbactions).contains("bck2brwsr"), "There should bck2brwsr goal in " + nbactions);
+    }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {
         Verifier v = new Verifier(dir.getAbsolutePath());

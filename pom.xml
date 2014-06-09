@@ -17,7 +17,6 @@
       <nb.html.version>0.8</nb.html.version>
       <brwsr.html.version>0.6</brwsr.html.version>
       <bck2brwsr.version>0.9-SNAPSHOT</bck2brwsr.version>
-      <teavm.version>0.1</teavm.version>
       <license>COPYING</license>
   </properties>
   <modules>

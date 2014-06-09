@@ -54,5 +54,15 @@
                 <span data-bind="text: $data, css: { 'rotate' : $root.on } "></span>
             </span>
         </div>
+        
+#if ($bck2brwsr == "true")
+        <!-- boot bck2brwsr -->
+        <script type="text/javascript" src="bck2brwsr.js"></script>
+        <script>
+            var vm = bck2brwsr('${artifactId}.js');
+            var c = vm.loadClass('${package}.Main');
+            c.invoke('onPageLoad');
+        </script>
+#end
     </body>
 </html>

@@ -60,4 +60,21 @@
         </activatedProfiles>
     </action>
 #end    
+#if ($bck2brwsr == "true")
+    <action>
+        <actionName>CUSTOM-bck2brwsr-show</actionName>
+        <displayName>Run in a Browser</displayName>
+        <goals>
+            <goal>package</goal>
+            <goal>bck2brwsr:show</goal>
+        </goals>
+        <activatedProfiles>
+            <activatedProfile>bck2brwsr</activatedProfile>
+        </activatedProfiles>
+        <properties>
+            <skipTests>true</skipTests>
+            <bck2brwsr.obfuscationlevel>NONE</bck2brwsr.obfuscationlevel>
+        </properties>
+    </action>
+#end
 </actions>

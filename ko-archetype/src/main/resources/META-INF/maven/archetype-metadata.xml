@@ -32,6 +32,9 @@
     <requiredProperty key="dlvkbrwsr">
         <defaultValue>false</defaultValue>
     </requiredProperty>  
+    <requiredProperty key="bck2brwsr">
+        <defaultValue>false</defaultValue>
+    </requiredProperty>  
   </requiredProperties>
   <fileSets>
     <fileSet filtered="true" packaged="true">

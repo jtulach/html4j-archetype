@@ -1,7 +1,6 @@
 package ${package};
 
 import java.io.Closeable;
-import java.util.concurrent.Executors;
 import net.java.html.boot.script.Scripts;
 import org.apidesign.html.boot.spi.Fn;
 import static org.testng.Assert.assertEquals;
@@ -18,7 +17,7 @@ import org.testng.annotations.Test;
 public class JsInteractionTest {
     private Closeable jsEngine;
     @BeforeMethod public void initializeJSEngine() throws Exception {
-        jsEngine = Fn.activate(Scripts.createPresenter(Executors.newSingleThreadExecutor()));
+        jsEngine = Fn.activate(Scripts.createPresenter());
     }
     
     @AfterMethod public void shutdownJSEngine() throws Exception {
