@@ -65,6 +65,7 @@
         <actionName>CUSTOM-bck2brwsr-show</actionName>
         <displayName>Run in a Browser</displayName>
         <goals>
+            <goal>clean</goal>
             <goal>package</goal>
             <goal>bck2brwsr:show</goal>
         </goals>
