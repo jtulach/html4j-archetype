@@ -41,7 +41,13 @@
     <net.java.html.version>${net.java.html.version}</net.java.html.version>
     <netbeans.compile.on.save>none</netbeans.compile.on.save>
     <project.mainclass>\${package}.Main</project.mainclass>
+#if ($bck2brwsr == "true")
+    <bck2brwsr.version>${bck2brwsr.version}</bck2brwsr.version>
     <bck2brwsr.obfuscationlevel>FULL</bck2brwsr.obfuscationlevel>
+#end    
+#if ($nbrwsr == "true")
+    <nb.html.version>${nb.html.version}</nb.html.version>
+#end    
   </properties>
   <build>
       <plugins>
@@ -118,6 +124,11 @@
   <dependencies>
     <dependency>
         <groupId>org.netbeans.html</groupId>
+        <artifactId>net.java.html</artifactId>
+        <version>\${net.java.html.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.netbeans.html</groupId>
         <artifactId>net.java.html.json</artifactId>
         <version>\${net.java.html.version}</version>
     </dependency>
@@ -150,6 +161,14 @@
       <scope>test</scope>
       <type>jar</type>
     </dependency>
+#if ($nbrwsr == "true")
+    <dependency>
+      <groupId>org.netbeans.html</groupId>
+      <artifactId>nbrwsr</artifactId>
+      <version>\${nb.html.version}</version>
+      <scope>provided</scope>
+    </dependency>
+#end    
   </dependencies>
   <profiles>
         <profile>
@@ -161,7 +180,7 @@
                 <dependency>
                     <groupId>org.netbeans.html</groupId>
                     <artifactId>net.java.html.boot.fx</artifactId>
-                    <version>${net.java.html.version}</version>
+                    <version>\${net.java.html.version}</version>
                     <scope>runtime</scope>
                 </dependency>
            </dependencies>
@@ -271,13 +290,13 @@
               <dependency>
                   <groupId>com.google.android</groupId>
                   <artifactId>android</artifactId>
-                  <version>${platform.version}</version>
+                  <version>\${platform.version}</version>
                   <scope>provided</scope>
               </dependency>
               <dependency>
                   <groupId>org.apidesign.brwsr</groupId>
                   <artifactId>dlvkbrwsr</artifactId>
-                  <version>0.6</version>
+                  <version>${brwsr.html.version}</version>
                   <type>jar</type>
               </dependency>
               <dependency>
@@ -339,7 +358,7 @@
                   <plugin>
                       <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                       <artifactId>android-maven-plugin</artifactId>
-                      <version>${android.plugin.version}</version>
+                      <version>\${android.plugin.version}</version>
                       <extensions>true</extensions>
                       <configuration>
                           <classifier>apk</classifier>
@@ -412,7 +431,7 @@
                       <configuration>
                           <archive>
                               <manifest>
-                                  <mainClass>${project.mainclass}</mainClass>
+                                  <mainClass>\${project.mainclass}</mainClass>
                                   <addClasspath>true</addClasspath>
                                   <classpathPrefix>lib/</classpathPrefix>
                               </manifest>
@@ -422,7 +441,7 @@
                   <plugin>
                       <groupId>org.apidesign.bck2brwsr</groupId>
                       <artifactId>bck2brwsr-maven-plugin</artifactId>
-                      <version>${bck2brwsr.version}</version>
+                      <version>\${bck2brwsr.version}</version>
                       <executions>
                           <execution>
                               <goals>
@@ -438,7 +457,7 @@
                           <classPathPrefix>lib</classPathPrefix>
                           <mainJavaScript>\${project.build.directory}/\${artifactId}.js</mainJavaScript>
                           <exports>
-                              <export>${project.mainclass}</export>
+                              <export>\${project.mainclass}</export>
                           </exports>
                       </configuration>
                   </plugin>
@@ -475,13 +494,13 @@
               <dependency>
                   <groupId>org.apidesign.bck2brwsr</groupId>
                   <artifactId>emul</artifactId>
-                  <version>${bck2brwsr.version}</version>
+                  <version>\${bck2brwsr.version}</version>
                   <classifier>rt</classifier>
               </dependency>
               <dependency>
                   <groupId>org.netbeans.html</groupId>
                   <artifactId>net.java.html.boot</artifactId>
-                  <version>${net.java.html.version}</version>
+                  <version>\${net.java.html.version}</version>
                   <exclusions>
                       <exclusion>
                           <artifactId>asm</artifactId>
@@ -492,7 +511,7 @@
               <dependency>
                   <groupId>org.apidesign.bck2brwsr</groupId>
                   <artifactId>ko-bck2brwsr</artifactId>
-                  <version>${bck2brwsr.version}</version>
+                  <version>\${bck2brwsr.version}</version>
                   <scope>runtime</scope>
               </dependency>
               <dependency>
@@ -500,11 +519,99 @@
                   <artifactId>vm4brwsr</artifactId>
                   <classifier>js</classifier>
                   <type>zip</type>
-                  <version>${bck2brwsr.version}</version>
+                  <version>\${bck2brwsr.version}</version>
                   <scope>provided</scope>
               </dependency>
           </dependencies>
       </profile>
+#end
+#if ($nbrwsr == "true")
+      <profile>
+          <id>nbrwsr</id>
+          <dependencies>
+              <dependency>
+                  <groupId>org.netbeans.html</groupId>
+                  <artifactId>nbrwsr</artifactId>
+                  <version>\${nb.html.version}</version>
+                  <scope>compile</scope>
+              </dependency>
+          </dependencies>
+          <build>
+              <plugins>
+                  <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-resources-plugin</artifactId>
+                      <version>2.6</version>
+                      <executions>
+                          <execution>
+                              <id>include-webpages</id>
+                              <goals>
+                                  <goal>copy-resources</goal>
+                              </goals>
+                              <phase>process-resources</phase>
+                              <configuration>
+                                  <outputDirectory>\${project.build.directory}/classes/${package.replace('.','/')}</outputDirectory>
+                                  <overwrite>true</overwrite>
+                                  <resources>          
+                                      <resource>
+                                          <directory>src/main/webapp/pages</directory>
+                                      </resource>
+                                  </resources>              
+                              </configuration>   
+                          </execution>
+                      </executions>
+                  </plugin>
+                  <plugin>
+                      <groupId>org.codehaus.mojo</groupId>
+                      <artifactId>nbm-maven-plugin</artifactId>
+                      <version>3.13</version>
+                      <extensions>true</extensions>
+                      <executions>
+                          <execution>
+                              <id>default-manifest</id>
+                              <phase>process-classes</phase>
+                              <goals>
+                                  <goal>manifest</goal>
+                              </goals>
+                              <configuration>
+                                  <useOSGiDependencies>true</useOSGiDependencies>
+                                  <brandingToken>\${artifactId}</brandingToken>
+                                  <cluster>\${artifactId}</cluster>
+                                  <verifyIntegrity>false</verifyIntegrity>
+                              </configuration>
+                          </execution>                       
+                          <execution>
+                              <id>default-nbm</id>
+                              <phase>package</phase>
+                              <goals>
+                                  <goal>nbm</goal>
+                              </goals>
+                              <configuration>
+                                  <useOSGiDependencies>true</useOSGiDependencies>
+                                  <cluster>extra</cluster>
+                                  <verifyIntegrity>false</verifyIntegrity>
+                              </configuration>
+                          </execution>
+                      </executions>
+                      <configuration>
+                          <useOSGiDependencies>true</useOSGiDependencies>
+                          <brandingToken>\${artifactId}</brandingToken>
+                          <cluster>\${artifactId}</cluster>
+                          <verifyIntegrity>false</verifyIntegrity>
+                      </configuration>
+                  </plugin>                      
+
+                  <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-jar-plugin</artifactId>
+                      <configuration>
+                          <!-- to have the jar plugin pickup the nbm generated manifest -->
+                          <useDefaultManifestFile>true</useDefaultManifestFile>
+                      </configuration>
+                  </plugin>
+              </plugins>
+          </build>
+      </profile>      
 #end
   </profiles>  
 </project>

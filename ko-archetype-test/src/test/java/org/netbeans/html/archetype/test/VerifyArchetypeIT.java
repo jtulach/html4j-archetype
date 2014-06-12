@@ -77,7 +77,7 @@ public class VerifyArchetypeIT {
     
     @Test public void iBrwsrProjectCompiles() throws Exception {
         final File dir = new File("target/tests/icompile/").getAbsoluteFile();
-        generateFromArchetype(dir);
+        generateFromArchetype(dir, "-Dibrwsr=true");
         
         File created = new File(dir, "o-a-test");
         assertTrue(created.isDirectory(), "Project created");
@@ -113,7 +113,7 @@ public class VerifyArchetypeIT {
 
     @Test public void iBrwsrVerifyRoboVMPlugin() throws Exception {
         final File dir = new File("target/tests/icompilecheck/").getAbsoluteFile();
-        generateFromArchetype(dir);
+        generateFromArchetype(dir, "-Dibrwsr=true");
         
         File created = new File(dir, "o-a-test");
         assertTrue(created.isDirectory(), "Project created");
@@ -275,6 +275,32 @@ public class VerifyArchetypeIT {
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
         assertTrue(Files.readFile(nbactions).contains("bck2brwsr"), "There should bck2brwsr goal in " + nbactions);
+    }
+    
+    @Test
+    public void nbrwsrProjectCompiles() throws Exception {
+        final File dir = new File("target/tests/ncmp/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Dnbrwsr=true");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
+        
+        File main = new File(new File(created, "src"), "main");
+        File pages = new File(new File(main, "webapp"), "pages");
+        File index = new File(pages, "index.html");
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+//        v.addCliOption("-Pnbrwsr");
+        v.executeGoal("package");
+        
+        v.verifyErrorFreeLog();
+        
+        v.assertFilePresent("target/classes/META-INF/generated-layer.xml");
+
+        File nbactions = new File(created, "nbactions.xml");
+        assertTrue(nbactions.isFile(), "Actions file is in there");
+        assertTrue(Files.readFile(nbactions).contains("nbm"), "There should nbm goal in " + nbactions);
     }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {
