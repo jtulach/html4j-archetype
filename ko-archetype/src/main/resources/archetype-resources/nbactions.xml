@@ -94,5 +94,19 @@
             <skipTests>true</skipTests>
         </properties>
     </action>
+    <action>
+        <actionName>CUSTOM-nbrwsr-run</actionName>
+        <displayName>Build NetBeans NBM file</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>install</goal>
+        </goals>
+        <activatedProfiles>
+            <activatedProfile>nbrwsr</activatedProfile>
+        </activatedProfiles>
+        <properties>
+            <skipTests>true</skipTests>
+        </properties>
+    </action>
 #end
 </actions>
