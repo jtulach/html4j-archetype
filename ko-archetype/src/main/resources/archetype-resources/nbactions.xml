@@ -95,7 +95,7 @@
         </properties>
     </action>
     <action>
-        <actionName>CUSTOM-nbrwsr-run</actionName>
+        <actionName>CUSTOM-nbrwsr-nbm</actionName>
         <displayName>Build NetBeans NBM file</displayName>
         <goals>
             <goal>clean</goal>
