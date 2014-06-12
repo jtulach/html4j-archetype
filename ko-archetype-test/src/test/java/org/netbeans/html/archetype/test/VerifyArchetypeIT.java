@@ -303,6 +303,28 @@ public class VerifyArchetypeIT {
         assertTrue(Files.readFile(nbactions).contains("nbm"), "There should nbm goal in " + nbactions);
     }
     
+    @Test
+    public void nbrwsrProjectCompilesForNetBeans() throws Exception {
+        final File dir = new File("target/tests/nbmcmp/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Dnbrwsr=true");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
+        
+        File main = new File(new File(created, "src"), "main");
+        File pages = new File(new File(main, "webapp"), "pages");
+        File index = new File(pages, "index.html");
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.addCliOption("-Pnbrwsr");
+        v.executeGoal("install");
+        
+        v.verifyErrorFreeLog();
+        
+        v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT.nbm");
+    }
+    
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {
         Verifier v = new Verifier(dir.getAbsolutePath());
         v.setAutoclean(false);

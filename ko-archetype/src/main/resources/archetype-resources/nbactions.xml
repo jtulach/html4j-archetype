@@ -84,6 +84,7 @@
         <displayName>Run in NetBeans</displayName>
         <goals>
             <goal>package</goal>
+            <goal>nbm:cluster</goal>
             <goal>nbm:run-ide</goal>
         </goals>
         <activatedProfiles>
