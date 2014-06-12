@@ -289,6 +289,10 @@ public class VerifyArchetypeIT {
         File main = new File(new File(created, "src"), "main");
         File pages = new File(new File(main, "webapp"), "pages");
         File index = new File(pages, "index.html");
+        assertTrue(index.exists(), "Index page is there");
+        
+        File plus = new File(pages, "plus.css");
+        plus.createNewFile();
         
         Verifier v = new Verifier(created.getAbsolutePath());
 //        v.addCliOption("-Pnbrwsr");
@@ -297,6 +301,8 @@ public class VerifyArchetypeIT {
         v.verifyErrorFreeLog();
         
         v.assertFilePresent("target/classes/META-INF/generated-layer.xml");
+        v.assertFilePresent("target/classes/org/someuser/test/oat/index.html");
+        v.assertFileNotPresent("target/classes/org/someuser/test/oat/plus.css");
 
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
@@ -323,6 +329,34 @@ public class VerifyArchetypeIT {
         v.verifyErrorFreeLog();
         
         v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT.nbm");
+    }
+    
+    @Test
+    public void nbrwsrProjectCompilesForNetBeansAndCopiesAllResources() throws Exception {
+        final File dir = new File("target/tests/nbmallres/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Dnbrwsr=true");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
+        
+        File main = new File(new File(created, "src"), "main");
+        File pages = new File(new File(main, "webapp"), "pages");
+        File index = new File(pages, "index.html");
+        assertTrue(index.exists(), "Index page is there");
+        
+        File plus = new File(pages, "plus.css");
+        plus.createNewFile();
+        
+        Verifier v = new Verifier(created.getAbsolutePath());
+        v.addCliOption("-Pnbrwsr");
+        v.executeGoal("install");
+        
+        v.verifyErrorFreeLog();
+        
+        v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT.nbm");
+        v.assertFilePresent("target/classes/org/someuser/test/oat/index.html");
+        v.assertFilePresent("target/classes/org/someuser/test/oat/plus.css");
     }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {

@@ -47,6 +47,7 @@
 #end    
 #if ($nbrwsr == "true")
     <nb.html.version>${nb.html.version}</nb.html.version>
+    <nb.pages>index.html</nb.pages>
 #end    
   </properties>
   <build>
@@ -138,7 +139,7 @@
                             <resource>
                                 <directory>src/main/webapp/pages</directory>
                                 <includes>
-                                    <include>index.html</include>
+                                    <include>${nb.pages}</include>
                                 </includes>
                             </resource>
                         </resources>              
@@ -564,31 +565,11 @@
                   <scope>compile</scope>
               </dependency>
           </dependencies>
+          <properties>
+              <nb.pages>**/*</nb.pages>
+          </properties>
           <build>
               <plugins>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-resources-plugin</artifactId>
-                      <version>2.6</version>
-                      <executions>
-                          <execution>
-                              <id>include-webpages</id>
-                              <goals>
-                                  <goal>copy-resources</goal>
-                              </goals>
-                              <phase>process-resources</phase>
-                              <configuration>
-                                  <outputDirectory>\${project.build.directory}/classes/${package.replace('.','/')}</outputDirectory>
-                                  <overwrite>true</overwrite>
-                                  <resources>          
-                                      <resource>
-                                          <directory>src/main/webapp/pages</directory>
-                                      </resource>
-                                  </resources>              
-                              </configuration>   
-                          </execution>
-                      </executions>
-                  </plugin>
                   <plugin>
                       <groupId>org.codehaus.mojo</groupId>
                       <artifactId>nbm-maven-plugin</artifactId>
