@@ -32,8 +32,8 @@ public final class Main {
     )
     @OpenHTMLRegistration(
         url="index.html",
-        displayName = "Open Your Page"
-//        , iconBase = "${package}/image.png"
+        displayName = "Open Your Page",
+        iconBase = "${package.replace('.','/')}/icon.png"
     )
     @ActionReferences({
         @ActionReference(path = "Menu/Window"),

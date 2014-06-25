@@ -416,6 +416,8 @@ public class VerifyArchetypeIT {
         v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT.nbm");
         v.assertFilePresent("target/classes/org/someuser/test/oat/index.html");
         v.assertFilePresent("target/classes/org/someuser/test/oat/plus.css");
+        v.assertFilePresent("target/classes/org/someuser/test/oat/icon.png");
+        v.assertFilePresent("target/classes/org/someuser/test/oat/icon24.png");
     }
     
     private Verifier generateFromArchetype(final File dir, String... params) throws Exception {
