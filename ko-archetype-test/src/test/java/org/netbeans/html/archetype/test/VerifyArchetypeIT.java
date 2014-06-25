@@ -41,6 +41,7 @@ import javax.xml.xpath.XPathFactoryConfigurationException;
 import org.apache.maven.it.VerificationException;
 import org.apache.maven.it.Verifier;
 import static org.testng.Assert.*;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.reporters.Files;
 import org.w3c.dom.Document;
@@ -198,6 +199,11 @@ public class VerifyArchetypeIT {
         
         Verifier v = new Verifier(created.getAbsolutePath());
         v.addCliOption("-Pdlvkbrwsr");
+        String sdk = System.getProperty("android.sdk.path");
+        if (sdk == null) {
+            throw new SkipException("No android.sdk.path set, skipping the test");
+        }
+        v.addCliOption("-Dandroid.sdk.path=" + sdk);
         v.executeGoal("verify");
         
         v.verifyErrorFreeLog();
@@ -210,6 +216,7 @@ public class VerifyArchetypeIT {
         
         Verifier v2 = new Verifier(created.getAbsolutePath());
         v2.addCliOption("-Pdlvkbrwsr");
+        v2.addCliOption("-Dandroid.sdk.path=" + sdk);
         v2.executeGoal("package");
         v2.verifyTextInLog("android-maven-plugin");
         
@@ -293,6 +300,7 @@ public class VerifyArchetypeIT {
         {
             Verifier v = new Verifier(created.getAbsolutePath());
             v.addCliOption("-Pbck2brwsr");
+            v.addCliOption("-Dbck2brwsr.obfuscationlevel=NONE");
             v.executeGoal("package");
 
             v.verifyErrorFreeLog();
