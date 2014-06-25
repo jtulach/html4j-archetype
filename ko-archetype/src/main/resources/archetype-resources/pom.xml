@@ -48,6 +48,7 @@
 #if ($nbrwsr == "true")
     <nb.html.version>${nb.html.version}</nb.html.version>
     <nb.pages>index.html</nb.pages>
+    <nb.cp>true</nb.cp>
 #end    
   </properties>
   <build>
@@ -82,7 +83,11 @@
                   <archive>
                       <manifest>
                           <mainClass>\${project.mainclass}</mainClass>
+#if ($nbrwsr == "true")
+                          <addClasspath>${nb.cp}</addClasspath>
+#else
                           <addClasspath>true</addClasspath>
+#end                          
                           <classpathPrefix>lib/</classpathPrefix>
                       </manifest>
                   </archive>
@@ -573,6 +578,7 @@
           </dependencies>
           <properties>
               <nb.pages>**/*</nb.pages>
+              <nb.cp>false</nb.cp>
           </properties>
           <build>
               <plugins>

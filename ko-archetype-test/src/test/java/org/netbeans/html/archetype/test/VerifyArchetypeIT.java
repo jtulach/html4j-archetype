@@ -29,6 +29,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.xml.XMLConstants;
@@ -350,6 +351,12 @@ public class VerifyArchetypeIT {
         v.assertFilePresent("target/classes/org/someuser/test/oat/index.html");
         v.assertFileNotPresent("target/classes/org/someuser/test/oat/plus.css");
 
+        File jar = new File(new File(created, "target"), "o-a-test-1.0-SNAPSHOT.jar");
+        assertTrue(jar.exists(), "File is created: " + jar);
+        JarFile jf = new JarFile(jar);
+        String cp = jf.getManifest().getMainAttributes().getValue("Class-Path");
+        assertNotNull(cp, "Classpath found: " + cp);
+
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
         assertTrue(Files.readFile(nbactions).contains("nbm"), "There should nbm goal in " + nbactions);
@@ -375,6 +382,12 @@ public class VerifyArchetypeIT {
         v.verifyErrorFreeLog();
         
         v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT.nbm");
+        
+        File jar = new File(new File(created, "target"), "o-a-test-1.0-SNAPSHOT.jar");
+        assertTrue(jar.exists(), "File is created: " + jar);
+        JarFile jf = new JarFile(jar);
+        String cp = jf.getManifest().getMainAttributes().getValue("Class-Path");
+        assertNull(cp, "No classpath: " + cp);
     }
     
     @Test
