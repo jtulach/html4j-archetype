@@ -34,7 +34,6 @@ import java.util.regex.Pattern;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
@@ -45,7 +44,6 @@ import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 import org.testng.reporters.Files;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -275,6 +273,46 @@ public class VerifyArchetypeIT {
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
         assertTrue(Files.readFile(nbactions).contains("bck2brwsr"), "There should bck2brwsr goal in " + nbactions);
+    }
+    
+    @Test public void bck2brwsrAndNbrwsrProjectCompiles() throws Exception {
+        final File dir = new File("target/tests/BandN/").getAbsoluteFile();
+        generateFromArchetype(dir, "-Dbck2brwsr=true", "-Dnbrwsr=true");
+        
+        File created = new File(dir, "o-a-test");
+        assertTrue(created.isDirectory(), "Project created");
+        assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
+        
+        File main = new File(new File(created, "src"), "main");
+        File pages = new File(new File(main, "webapp"), "pages");
+        File index = new File(pages, "index.html");
+        
+        String indexContent = Files.readFile(index);
+        assertTrue(indexContent.contains("src=\"bck2brwsr.js\""), "There should be bck2brwsr.js reference in " + index);
+
+        {
+            Verifier v = new Verifier(created.getAbsolutePath());
+            v.addCliOption("-Pbck2brwsr");
+            v.executeGoal("package");
+
+            v.verifyErrorFreeLog();
+            v.verifyTextInLog("BandN/o-a-test/target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
+
+            v.assertFileNotPresent("target/res/drawable-hdpi/ic_launcher.png");
+            v.assertFileNotPresent("target/res/drawable-mdpi/ic_launcher.png");
+            v.assertFileNotPresent("target/res/drawable-xhdpi/ic_launcher.png");
+            v.assertFileNotPresent("target/res/drawable-xxhdpi/ic_launcher.png");
+
+            v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/");
+            v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/public_html/index.html");
+            v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr/public_html/bck2brwsr.js");
+            v.assertFilePresent("target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
+            v.assertFilePresent("target/o-a-test.js");
+
+            File nbactions = new File(created, "nbactions.xml");
+            assertTrue(nbactions.isFile(), "Actions file is in there");
+            assertTrue(Files.readFile(nbactions).contains("bck2brwsr"), "There should bck2brwsr goal in " + nbactions);
+        }
     }
     
     @Test
