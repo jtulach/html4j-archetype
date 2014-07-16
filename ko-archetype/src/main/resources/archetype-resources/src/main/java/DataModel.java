@@ -39,7 +39,9 @@ final class DataModel {
     @net.java.html.js.JavaScriptBody(
         args = { "msg", "callback" }, 
         javacall = true, 
-        body = "alert(msg); callback.@java.lang.Runnable::run()();"
+        body = "if (confirm(msg)) {\n"
+             + "  callback.@java.lang.Runnable::run()();\n"
+             + "}\n"
     )
     static native void confirmByUser(String msg, Runnable callback);
 }
