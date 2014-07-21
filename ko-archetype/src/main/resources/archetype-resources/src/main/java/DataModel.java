@@ -22,11 +22,11 @@ final class DataModel {
         return java.util.Arrays.asList(arr);
     }
     
-    @Function static void turnOn(Data model) {
+    @Function static void turnAnimationOn(Data model) {
         model.setRotating(true);
     }
     
-    @Function static void turnOff(final Data model) {
+    @Function static void turnAnimationOff(final Data model) {
         confirmByUser("Really turn off?", new Runnable() {
             @Override
             public void run() {
