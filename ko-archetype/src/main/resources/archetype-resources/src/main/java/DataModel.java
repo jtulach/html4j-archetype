@@ -35,6 +35,17 @@ final class DataModel {
         });
     }
     
+    @Function static void rotate5s(final Data model) {
+        model.setRotating(true);
+        java.util.Timer timer = new java.util.Timer("Rotates a while");
+        timer.schedule(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                model.setRotating(false);
+            }
+        }, 5000);
+    }
+    
     @Function static void showScreenSize(Data model) {
         model.setMessage(screenSize());
     }
