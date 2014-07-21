@@ -35,6 +35,10 @@ final class DataModel {
         });
     }
     
+    @Function static void showScreenSize(Data model) {
+        model.setMessage(screenSize());
+    }
+    
     /** Shows direct interaction with JavaScript */
     @net.java.html.js.JavaScriptBody(
         args = { "msg", "callback" }, 
@@ -44,4 +48,16 @@ final class DataModel {
              + "}\n"
     )
     static native void confirmByUser(String msg, Runnable callback);
+    @net.java.html.js.JavaScriptBody(
+        args = {}, body = 
+        "var w = window,\n" +
+        "    d = document,\n" +
+        "    e = d.documentElement,\n" +
+        "    g = d.getElementsByTagName('body')[0],\n" +
+        "    x = w.innerWidth || e.clientWidth || g.clientWidth,\n" +
+        "    y = w.innerHeight|| e.clientHeight|| g.clientHeight;\n" +
+        "\n" +
+        "return 'Screen size is ' + x + ' times ' + y;\n"
+    )
+    static native String screenSize();
 }
