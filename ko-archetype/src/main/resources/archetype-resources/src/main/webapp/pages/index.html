@@ -50,13 +50,13 @@
         <h1>Words Demo</h1>
         <input data-bind="value: message, valueUpdate: 'afterkeydown'">
         <br>
-        <button data-bind="enable: !on(), click: $root.turnOn">Start</button>
-        <button data-bind="enable: on, click: $root.turnOff">Stop</button>
+        <button data-bind="enable: !rotating(), click: $root.turnOn">Start</button>
+        <button data-bind="enable: rotating, click: $root.turnOff">Stop</button>
         <button data-bind="click: $root.showScreenSize">Screen Size!</button>
 
         <div id="scene">
             <span id="words" data-bind="foreach: words">
-                <span data-bind="text: $data, css: { 'rotate' : $root.on } "></span>
+                <span data-bind="text: $data, css: { 'rotate' : $root.rotating } "></span>
             </span>
         </div>
         

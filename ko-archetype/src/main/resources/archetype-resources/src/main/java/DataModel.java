@@ -10,7 +10,7 @@ import net.java.html.json.Property;
  */
 @Model(className = "Data", properties = {
     @Property(name = "message", type = String.class),
-    @Property(name = "on", type = boolean.class)
+    @Property(name = "rotating", type = boolean.class)
 })
 final class DataModel {
     @ComputedProperty static java.util.List<String> words(String message) {
@@ -23,14 +23,14 @@ final class DataModel {
     }
     
     @Function static void turnOn(Data model) {
-        model.setOn(true);
+        model.setRotating(true);
     }
     
     @Function static void turnOff(final Data model) {
         confirmByUser("Really turn off?", new Runnable() {
             @Override
             public void run() {
-                model.setOn(false);
+                model.setRotating(false);
             }
         });
     }
