@@ -10,6 +10,10 @@
                 100% { -webkit-transform: rotate(360deg); }
             }
 
+            input {
+                width: 100%;
+            }
+
             .rotate {
                 -webkit-animation-name: spin;
                 -webkit-animation-duration: 3s;
@@ -44,7 +48,7 @@
     </head>
     <body>
         <h1>Words Demo</h1>
-        <input data-bind="value: message, valueUpdate: 'afterkeydown'" size="80">
+        <input data-bind="value: message, valueUpdate: 'afterkeydown'">
         <br>
         <button data-bind="enable: !on(), click: $root.turnOn">Start</button>
         <button data-bind="enable: on, click: $root.turnOff">Stop</button>
