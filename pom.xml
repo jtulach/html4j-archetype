@@ -17,6 +17,7 @@
       <nb.html.version>0.8.3</nb.html.version>
       <brwsr.html.version>0.8.1</brwsr.html.version>
       <bck2brwsr.version>0.9</bck2brwsr.version>
+      <jersey.version>2.12-SNAPSHOT</jersey.version>
       <license>COPYING</license>
   </properties>
   <modules>

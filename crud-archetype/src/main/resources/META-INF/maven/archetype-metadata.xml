@@ -24,7 +24,7 @@
     THE SOFTWARE.
 
 -->
-<archetype-descriptor name="Knockout.js for Java Example">
+<archetype-descriptor name="CRUD for HTML/Java Example">
   <requiredProperties>
     <requiredProperty key="ibrwsr">
         <defaultValue>false</defaultValue>
@@ -40,14 +40,20 @@
     </requiredProperty>  
   </requiredProperties>
   <fileSets>
+    <fileSet filtered="true">
+          <directory>client</directory>
+          <includes>
+              <include>pom.xml</include>
+          </includes>
+    </fileSet>
     <fileSet filtered="true" packaged="true">
-      <directory>src/main/java</directory>
+      <directory>client/src/main/java</directory>
       <includes>
         <include>**/*.java</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="false">
-      <directory>src/main/webapp/pages</directory>
+      <directory>client/src/main/webapp/pages</directory>
       <includes>
         <include>**/*.xhtml</include>
         <include>**/*.html</include>
@@ -55,35 +61,89 @@
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="true">
-      <directory>src/test/java</directory>
+      <directory>client/src/test/java</directory>
       <includes>
         <include>**/*Test.java</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="false">
-      <directory>src/main/assembly</directory>
+      <directory>client/src/main/assembly</directory>
       <includes>
         <include>**/*.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="false" packaged="false">
-      <directory>src/main/icons</directory>
+      <directory>client/src/main/icons</directory>
       <includes>
         <include>**/*.png</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="false">
-      <directory></directory>
+      <directory>client/</directory>
       <includes>
         <include>nbactions*.xml</include>
         <include>AndroidManifest*.xml</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="false">
-      <directory>assembly</directory>
+      <directory>client/assembly</directory>
       <includes>
         <include>html.java.net-assembly.xml</include>
       </includes>
+    </fileSet>
+    <fileSet filtered="true">
+        <directory>js</directory>
+        <includes>
+            <include>pom.xml</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true">
+        <directory>js/src/main/java</directory>
+        <includes>
+            <include>**/*.java</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true">
+        <directory>js/src/test/java</directory>
+        <includes>
+            <include>**/*Test.java</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true">
+        <directory>shared</directory>
+        <includes>
+            <include>pom.xml</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true">
+        <directory>shared/src/main/java</directory>
+        <includes>
+            <include>**/*.java</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true">
+        <directory>shared/src/test/java</directory>
+        <includes>
+            <include>**/*Test.java</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true">
+        <directory>server</directory>
+        <includes>
+            <include>pom.xml</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true">
+        <directory>server/src/main/java</directory>
+        <includes>
+            <include>**/*.java</include>
+        </includes>
+    </fileSet>
+    <fileSet filtered="true" packaged="true">
+        <directory>server/src/test/java</directory>
+        <includes>
+            <include>**/*Test.java</include>
+        </includes>
     </fileSet>
   </fileSets>    
 </archetype-descriptor>
