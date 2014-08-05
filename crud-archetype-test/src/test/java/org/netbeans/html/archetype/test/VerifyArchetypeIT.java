@@ -72,7 +72,7 @@ public class VerifyArchetypeIT {
             }
         }
         
-        v.verifyTextInLog("fxcompile/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        v.verifyTextInLog("fxcompile/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
     }
     
     @Test public void iBrwsrProjectCompiles() throws Exception {

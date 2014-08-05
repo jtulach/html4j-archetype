@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-  <parent>
+    <parent>
       <groupId>\${groupId}</groupId>
       <artifactId>\${artifactId}-pom</artifactId>
       <version>\${version}</version>
-  </parent>
+    </parent>
     <artifactId>\${artifactId}-server</artifactId>
     <packaging>jar</packaging>
     <name>Jersey REST Server with DukeScript JSON Convertors</name>
@@ -62,8 +62,8 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>${groupId}</groupId>
-            <artifactId>${artifactId}-shared</artifactId>
+            <groupId>\${groupId}</groupId>
+            <artifactId>\${artifactId}-shared</artifactId>
             <version>\${project.version}</version>
             <type>jar</type>
         </dependency>

@@ -1,9 +1,9 @@
 package ${package};
 
-import cz.xelfi.test.js.Dialogs;
-import cz.xelfi.test.shared.Contact;
-import cz.xelfi.test.shared.Phone;
-import cz.xelfi.test.shared.PhoneType;
+import ${package}.js.Dialogs;
+import ${package}.shared.Contact;
+import ${package}.shared.Phone;
+import ${package}.shared.PhoneType;
 import java.util.List;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
