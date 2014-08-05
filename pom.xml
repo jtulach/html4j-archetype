@@ -20,6 +20,8 @@
       <license>COPYING</license>
   </properties>
   <modules>
+    <module>crud-archetype</module>
+    <module>crud-archetype-test</module>
     <module>ko-archetype</module>
     <module>ko-archetype-test</module>
   </modules>
@@ -74,7 +76,7 @@
                   <header>COPYING</header>
                   <strictCheck>true</strictCheck>
                   <excludes>
-                       <exclude>ko-archetype/src/main/resources/archetype-resources/**</exclude>
+                       <exclude>*-archetype/src/main/resources/archetype-resources/**</exclude>
                        <exclude>*</exclude>
                        <exclude>.*/**</exclude>
                   </excludes>
