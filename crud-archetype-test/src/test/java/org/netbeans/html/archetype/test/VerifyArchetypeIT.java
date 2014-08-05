@@ -88,9 +88,11 @@ public class VerifyArchetypeIT {
         v.executeGoal("verify");
         
         v.verifyErrorFreeLog();
-        v.verifyTextInLog("icompile/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        v.verifyTextInLog("icompile/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
         
-        Verifier v2 = new Verifier(created.getAbsolutePath());
+        File client = new File(created, "client");
+        assertTrue(client.isDirectory(), "Subproject dir found: " + client);
+        Verifier v2 = new Verifier(client.getAbsolutePath());
         v2.addCliOption("-Pibrwsr");
         try { 
             v2.executeGoal("robovm:ipad-sim");
@@ -99,7 +101,7 @@ public class VerifyArchetypeIT {
         }
         v2.verifyTextInLog("Building RoboVM app for: ios (x86)");
         
-        File nbactions = new File(created, "nbactions.xml");
+        File nbactions = new File(client, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
         assertTrue(Files.readFile(nbactions).contains("robovm"), "There should robovm goals in " + nbactions);
 
@@ -120,9 +122,12 @@ public class VerifyArchetypeIT {
         final File pom = new File(created, "pom.xml");
         assertTrue(pom.isFile(), "Pom file is in there");
         
-        final File eff = new File(created, "eff.xml");
+        File client = new File(created, "client");
+        assertTrue(client.isDirectory(), "Subproject dir found: " + client);
         
-        Verifier v = new Verifier(created.getAbsolutePath());
+        final File eff = new File(client, "eff.xml");
+        
+        Verifier v = new Verifier(client.getAbsolutePath());
         v.addCliOption("-Doutput=" + eff);
         v.executeGoal("help:effective-pom");
         
@@ -137,9 +142,9 @@ public class VerifyArchetypeIT {
         String prev = xp.evaluate(dom);
         assertNotNull(prev, "Plugin version must be found");
         
-        File out = new File(created, "out.txt");
+        File out = new File(client, "out.txt");
         
-        Verifier d = new Verifier(created.getAbsolutePath());
+        Verifier d = new Verifier(client.getAbsolutePath());
         d.addCliOption("-Pibrwsr");
         d.addCliOption("-DoutputFile=" + out);
         d.executeGoal("dependency:tree");
@@ -173,7 +178,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/noicompile/").getAbsoluteFile();
         generateFromArchetype(dir, "-Dibrwsr=false");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         File pom = new File(created, "pom.xml");
         assertTrue(pom.isFile(), "Pom file is in there");
@@ -183,7 +188,7 @@ public class VerifyArchetypeIT {
         v.executeGoal("package");
         
         v.verifyErrorFreeLog();
-        v.verifyTextInLog("noicompile/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        v.verifyTextInLog("noicompile/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
         
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
@@ -194,7 +199,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/dlvkbrwsrcmp/").getAbsoluteFile();
         generateFromArchetype(dir, "-Ddlvkbrwsr=true");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
         
@@ -208,7 +213,7 @@ public class VerifyArchetypeIT {
         v.executeGoal("verify");
         
         v.verifyErrorFreeLog();
-        v.verifyTextInLog("dlvkbrwsrcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        v.verifyTextInLog("dlvkbrwsrcmp/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
         
         v.assertFilePresent("target/res/drawable-hdpi/ic_launcher.png");
         v.assertFilePresent("target/res/drawable-mdpi/ic_launcher.png");
@@ -230,7 +235,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/wdlvkbrwsrcmp/").getAbsoluteFile();
         generateFromArchetype(dir, "-Ddlvkbrwsr=false");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         final File pom = new File(created, "pom.xml");
         assertTrue(pom.isFile(), "Pom file is in there");
@@ -241,7 +246,7 @@ public class VerifyArchetypeIT {
         v.executeGoal("verify");
         
         v.verifyErrorFreeLog();
-        v.verifyTextInLog("wdlvkbrwsrcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        v.verifyTextInLog("wdlvkbrwsrcmp/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
     }
 
     @Test
@@ -249,7 +254,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/b2bcmp/").getAbsoluteFile();
         generateFromArchetype(dir, "-Dbck2brwsr=true");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
         
@@ -265,7 +270,7 @@ public class VerifyArchetypeIT {
         v.executeGoal("package");
         
         v.verifyErrorFreeLog();
-        v.verifyTextInLog("b2bcmp/o-a-test/target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
+        v.verifyTextInLog("b2bcmp/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
         
         v.assertFileNotPresent("target/res/drawable-hdpi/ic_launcher.png");
         v.assertFileNotPresent("target/res/drawable-mdpi/ic_launcher.png");
@@ -287,7 +292,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/BandN/").getAbsoluteFile();
         generateFromArchetype(dir, "-Dbck2brwsr=true", "-Dnbrwsr=true");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
         
@@ -305,7 +310,7 @@ public class VerifyArchetypeIT {
             v.executeGoal("package");
 
             v.verifyErrorFreeLog();
-            v.verifyTextInLog("BandN/o-a-test/target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
+            v.verifyTextInLog("BandN/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-bck2brwsr.zip");
 
             v.assertFileNotPresent("target/res/drawable-hdpi/ic_launcher.png");
             v.assertFileNotPresent("target/res/drawable-mdpi/ic_launcher.png");
@@ -329,7 +334,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/ncmp/").getAbsoluteFile();
         generateFromArchetype(dir, "-Dnbrwsr=true");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
         
@@ -367,7 +372,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/nbmcmp/").getAbsoluteFile();
         generateFromArchetype(dir, "-Dnbrwsr=true");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
         
@@ -395,7 +400,7 @@ public class VerifyArchetypeIT {
         final File dir = new File("target/tests/nbmallres/").getAbsoluteFile();
         generateFromArchetype(dir, "-Dnbrwsr=true");
         
-        File created = new File(dir, "o-a-test");
+        File created = new File(new File(dir, "o-a-test"), "client");
         assertTrue(created.isDirectory(), "Project created");
         assertTrue(new File(created, "pom.xml").isFile(), "Pom file is in there");
         
