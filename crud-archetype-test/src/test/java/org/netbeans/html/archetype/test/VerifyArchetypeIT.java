@@ -73,6 +73,8 @@ public class VerifyArchetypeIT {
         }
         
         v.verifyTextInLog("fxcompile/o-a-test/client/target/o-a-test-1.0-SNAPSHOT-html.java.net.zip");
+        
+        v.assertFilePresent("server/nbactions.xml");
     }
     
     @Test public void iBrwsrProjectCompiles() throws Exception {

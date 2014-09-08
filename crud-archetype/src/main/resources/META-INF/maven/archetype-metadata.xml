@@ -130,6 +130,7 @@
     <fileSet filtered="true">
         <directory>server</directory>
         <includes>
+            <include>nbactions*.xml</include>
             <include>pom.xml</include>
         </includes>
     </fileSet>
