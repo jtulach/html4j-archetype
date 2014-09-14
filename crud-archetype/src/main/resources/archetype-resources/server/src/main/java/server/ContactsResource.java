@@ -42,7 +42,7 @@ public final class ContactsResource {
     
     @GET @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public Contact allContacts(@PathParam("id") String id) {
+    public Contact getContact(@PathParam("id") String id) {
         for (Contact contact : contacts) {
             if (id.equals(contact.getId())) {
                 return contact;
