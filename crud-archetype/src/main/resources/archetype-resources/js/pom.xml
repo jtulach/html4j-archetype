@@ -12,7 +12,7 @@
   <version>\${version}</version>
   <packaging>bundle</packaging>
 
-  <name>JavaScript Libraries</name>
+  <name>\${artifactId} JavaScript Libraries</name>
 
   <properties>
     <netbeans.compile.on.save>none</netbeans.compile.on.save>

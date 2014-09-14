@@ -8,7 +8,7 @@
   <version>\${version}</version>
   <packaging>jar</packaging>
 
-  <name>Clients \${artifactId} for
+  <name>\${artifactId} Clients for
 #if ($ibrwsr == "true")
  iOS,
 #end
