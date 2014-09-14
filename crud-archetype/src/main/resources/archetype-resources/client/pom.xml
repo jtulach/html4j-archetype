@@ -435,7 +435,7 @@ and JavaFX</name>
                           </sdk>
                           <apk>
                               <metaIncludes>
-                                  <metaInclude>services/org.apidesign.**</metaInclude>
+                                  <metaInclude>services/org.netbeans.**</metaInclude>
                               </metaIncludes>
                           </apk>
                           <extractDuplicates>true</extractDuplicates>
