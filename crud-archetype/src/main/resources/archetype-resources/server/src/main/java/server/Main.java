@@ -16,7 +16,7 @@ final class Main implements ContainerResponseFilter {
         ResourceConfig rc = new ResourceConfig(
             ContactsResource.class, Main.class
         );
-        URI u = new URI("http://localhost:8080/");
+        URI u = new URI("http://0.0.0.0:8080/");
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(u, rc);
         System.err.println("Press Enter to shutdown the server");
         System.in.read();
