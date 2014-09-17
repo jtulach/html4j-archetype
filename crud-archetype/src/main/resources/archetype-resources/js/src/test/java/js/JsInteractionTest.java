@@ -2,7 +2,7 @@ package ${package}.js;
 
 import java.io.Closeable;
 import net.java.html.boot.script.Scripts;
-import org.apidesign.html.boot.spi.Fn;
+import org.netbeans.html.boot.spi.Fn;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

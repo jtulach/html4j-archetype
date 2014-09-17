@@ -8,7 +8,7 @@
     </parent>
     <artifactId>\${artifactId}-shared</artifactId>
     <packaging>bundle</packaging>
-    <name>Data Structures Shared between Client and Server</name>
+    <name>\${artifactId} Shared Client Server Data Structures</name>
     <dependencies>
         <dependency>
             <groupId>org.netbeans.html</groupId>
