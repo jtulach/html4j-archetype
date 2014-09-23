@@ -572,12 +572,6 @@ and JavaFX</name>
                       </exclusion>
                   </exclusions>
               </dependency>
-              <dependency>
-                  <groupId>org.apidesign.bck2brwsr</groupId>
-                  <artifactId>ko-bck2brwsr</artifactId>
-                  <version>\${bck2brwsr.version}</version>
-                  <scope>runtime</scope>
-              </dependency>
           </dependencies>
       </profile>
 #end
