@@ -321,7 +321,6 @@ and JavaFX</name>
                                   <pattern>org.netbeans.html.ko4j.KO4J</pattern>
                                   <pattern>org.netbeans.html.sound.impl.BrowserAudioEnv</pattern>
                                   <pattern>org.apidesign.brwsr.IBrwsrPrsntr</pattern>
-                                  <pattern>com.android.okhttp.HttpHandler</pattern>
                               </forceLinkClasses>
                               <executableName>\${artifactId}</executableName>
                               <resources>
