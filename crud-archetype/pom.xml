@@ -4,11 +4,11 @@
   <parent>
     <groupId>org.apidesign.html</groupId>
     <artifactId>pom</artifactId>
-    <version>2.0-SNAPSHOT</version>
+    <version>1.1</version>
   </parent>
   <groupId>org.apidesign.html</groupId>
   <artifactId>crud4j-archetype</artifactId>
-  <version>2.0-SNAPSHOT</version>
+  <version>1.1</version>
   <packaging>jar</packaging>
   <name>CRUD for HTML/Java Maven Archetype</name>
   <description>
