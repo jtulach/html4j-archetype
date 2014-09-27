@@ -5,6 +5,7 @@ import java.net.Inet4Address;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.URI;
+import java.util.Enumeration;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -40,6 +41,7 @@ final class Main implements ContainerResponseFilter {
     }    
     
     private static void dumpIPs() throws Exception {
+        Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
         while (en.hasMoreElements()) {
             NetworkInterface n = en.nextElement();
             if (n.isUp()) {
