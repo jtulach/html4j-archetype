@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.apidesign.html</groupId>
         <artifactId>pom</artifactId>
-        <version>1.1</version>
+        <version>2.0-SNAPSHOT</version>
     </parent>
     <groupId>org.netbeans.html</groupId>
     <artifactId>crud-archetype-test</artifactId>
-    <version>1.1</version>
+    <version>2.0-SNAPSHOT</version>
     <name>CRUD for HTML/Java Archetype Test</name>
     <url>http://maven.apache.org</url>
     <description>Verifies the Knockout &amp; net.java.html.json archetype behaves properly.</description>
