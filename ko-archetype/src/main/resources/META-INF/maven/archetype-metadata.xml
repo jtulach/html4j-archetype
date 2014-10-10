@@ -26,12 +26,6 @@
 -->
 <archetype-descriptor name="Knockout.js for Java Example">
   <requiredProperties>
-    <requiredProperty key="ibrwsr">
-        <defaultValue>false</defaultValue>
-    </requiredProperty>  
-    <requiredProperty key="dlvkbrwsr">
-        <defaultValue>false</defaultValue>
-    </requiredProperty>  
     <requiredProperty key="bck2brwsr">
         <defaultValue>false</defaultValue>
     </requiredProperty>  
