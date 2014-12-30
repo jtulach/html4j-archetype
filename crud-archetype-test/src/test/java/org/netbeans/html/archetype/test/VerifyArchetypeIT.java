@@ -209,7 +209,9 @@ public class VerifyArchetypeIT {
 
             File nbactions = new File(created, "nbactions.xml");
             assertTrue(nbactions.isFile(), "Actions file is in there");
-            assertTrue(Files.readFile(nbactions).contains("bck2brwsr"), "There should bck2brwsr goal in " + nbactions);
+            final String cntnt = Files.readFile(nbactions);
+            assertTrue(cntnt.contains("bck2brwsr"), "There should bck2brwsr goal in " + nbactions);
+            assertTrue(cntnt.contains("CUSTOM-bck2brwsr-web"), "An action to generate a web in " + nbactions);
         }
     }
     

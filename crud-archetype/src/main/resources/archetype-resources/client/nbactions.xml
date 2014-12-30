@@ -34,6 +34,17 @@
             <bck2brwsr.obfuscationlevel>NONE</bck2brwsr.obfuscationlevel>
         </properties>
     </action>
+    <action>
+        <actionName>CUSTOM-bck2brwsr-web</actionName>
+        <displayName>Package for website</displayName>
+        <goals>
+            <goal>clean</goal>
+            <goal>package</goal>
+        </goals>
+        <activatedProfiles>
+            <activatedProfile>bck2brwsr</activatedProfile>
+        </activatedProfiles>
+    </action>
 #end
 #if ($nbrwsr == "true")
     <action>
