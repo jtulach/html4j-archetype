@@ -154,6 +154,15 @@ public class VerifyArchetypeIT {
         File nbactions = new File(created, "nbactions.xml");
         assertTrue(nbactions.isFile(), "Actions file is in there");
         assertTrue(Files.readFile(nbactions).contains("bck2brwsr"), "There should bck2brwsr goal in " + nbactions);
+        
+        for (String line : v.loadFile(v.getBasedir(), v.getLogFileName(), false)) {
+            if (line.matches(".*Generating.*emul.*")) {
+                fail("Don't generate emul: " + line);
+            }
+            if (line.matches(".*Generating.*net.java.html.*")) {
+                fail("Don't generate HTML/Java libraries: " + line);
+            }
+        }        
     }
     
     @Test public void bck2brwsrAndNbrwsrProjectCompiles() throws Exception {
