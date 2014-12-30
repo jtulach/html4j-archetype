@@ -8,7 +8,7 @@ import net.java.html.json.Property;
 /** Model annotation generates class Data with 
  * one message property, boolean property and read only words property
  */
-@Model(className = "Data", properties = {
+@Model(className = "Data", targetId="", properties = {
     @Property(name = "message", type = String.class),
     @Property(name = "rotating", type = boolean.class)
 })

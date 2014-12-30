@@ -14,7 +14,7 @@ import net.java.html.json.Property;
 /** Generates UI class that provides the application logic model for
  * the HTML page.
  */
-@Model(className = "UI", properties = {
+@Model(className = "UI", targetId="", properties = {
     @Property(name = "url", type = String.class),
     @Property(name = "message", type = String.class),
     @Property(name = "contacts", type = Contact.class, array = true),
